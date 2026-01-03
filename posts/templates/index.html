@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<section class="relative bg-white pt-16 pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        <div class="space-y-8">
+            <h1 class="text-6xl md:text-7xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                Welcome to <br><span class="text-blue-600">InkFlow</span>
+            </h1>
+            <p class="text-xl text-gray-500 max-w-sm leading-relaxed">
+                Write and share your articles, essays, poems and stories — all in one beautiful space.
+            </p>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-blue-200 hover:scale-105 transition-transform">
+                    Start Writing
+                </a>
+            </div>
+        </div>
+        
+        <div class="flex justify-center">
+            <img src="https://illustrations.popsy.co/blue/creative-writing.svg" 
+                 alt="Writing Illustration" 
+                 class="w-full max-w-md drop-shadow-sm">
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-0">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-[100px] fill-[#FDFCFB]">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="flex justify-between items-end mb-12">
+        <h3 class="text-3xl font-bold text-slate-900">Latest Writings</h3>
+        
+        <div class="hidden sm:flex gap-6 text-sm font-bold text-gray-400">
+            <span class="text-blue-600 border-b-2 border-blue-600 pb-1 cursor-pointer">All</span>
+            <span class="hover:text-slate-600 cursor-pointer transition">Articles</span>
+            <span class="hover:text-slate-600 cursor-pointer transition">Poems</span>
+            <span class="hover:text-slate-600 cursor-pointer transition">Stories</span>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for post in posts %}
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div class="h-52 bg-slate-100"></div>
+                <div class="p-8">
+                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">{{ post.category }}</span>
+                    <h4 class="text-2xl font-bold mt-3 mb-4 text-slate-800">{{ post.title }}</h4>
+                    <p class="text-gray-400 text-sm font-medium">By {{ post.author }} · {{ post.date }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-full py-24 text-center border-2 border-dashed border-gray-200 rounded-[40px] bg-white/50">
+                <div class="text-5xl mb-4">✍️</div>
+                <h4 class="text-xl font-bold text-slate-800">No writings here yet</h4>
+                <p class="text-gray-400 mt-2">The ink is still fresh. Be the first to share your story!</p>
+                <button class="mt-6 text-blue-600 font-bold hover:underline">Start a draft &rarr;</button>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
