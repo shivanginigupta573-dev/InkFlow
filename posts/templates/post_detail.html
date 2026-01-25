@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<article class="min-h-screen bg-white pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-6">
+        
+        <div class="mb-12 text-center">
+            <span class="text-xs font-black uppercase tracking-[0.3em] text-blue-500 bg-blue-50 px-4 py-2 rounded-full">
+                {{ post.category }}
+            </span>
+            <h1 class="text-5xl font-black text-slate-900 mt-8 mb-4 leading-tight">
+                {{ post.text|truncatechars:30 }}...
+            </h1>
+            <div class="flex items-center justify-center gap-3 text-slate-400 font-bold">
+                <span>@{{ post.user.username }}</span>
+                <span>•</span>
+                <span>{{ post.created_at|date:"F d, Y" }}</span>
+            </div>
+        </div>
+
+        {% if post.photo %}
+        <div class="mb-16 rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-100">
+            <img src="{{ post.photo.url }}" class="w-full object-cover">
+        </div>
+        {% endif %}
+
+        <div class="prose prose-xl prose-slate mx-auto">
+            <p class="text-2xl text-slate-700 leading-[1.8] font-medium whitespace-pre-wrap">
+                {{ post.text }}
+            </p>
+        </div>
+
+        <div class="mt-20 pt-10 border-t border-slate-100 flex justify-center">
+            <a href="{% url 'post_list' %}" class="group flex items-center gap-3 text-slate-400 hover:text-blue-500 font-bold transition-all">
+                <span class="group-hover:-translate-x-2 transition-transform">←</span> 
+                Back to Explore
+            </a>
+        </div>
+    </div>
+</article>
+{% endblock %}

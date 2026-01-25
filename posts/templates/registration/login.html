@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center bg-[#FDFCFB] pt-20">
+    <div class="max-w-md w-full bg-white/40 backdrop-blur-2xl border border-white/40 p-12 rounded-[3rem] shadow-2xl shadow-blue-100">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black text-slate-900 mb-2">Welcome Back</h1>
+            <p class="text-gray-400 font-medium">Step back into the flow.</p>
+        </div>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2">Username</label>
+                <input type="text" name="username" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-[#A5D8FF] transition-all" placeholder="Enter username">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2">Password</label>
+                <input type="password" name="password" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-[#A5D8FF] transition-all" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="w-full bg-[#A5D8FF] text-[#1E3A8A] py-4 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:scale-[1.02] transition-all mt-4">
+                Login to InkFlow
+            </button>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-gray-400">
+            New here? <a href="#" class="text-[#74C0FC] font-bold">Create an account</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

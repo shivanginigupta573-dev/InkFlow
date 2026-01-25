@@ -4,50 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}InkFlow{% endblock %}</title>
+    <title>InkFlow</title>
     {% tailwind_css %}
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .hero-gradient { background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); }
     </style>
 </head>
-<body class="bg-[#FDFCFB] text-slate-900 antialiased">
+<body class="bg-white text-slate-900 antialiased">
 
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-10">
-                <a href="/" class="text-2xl font-bold tracking-tighter text-slate-900">InkFlow</a>
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <div class="flex items-center space-x-12">
+                <a href="/" class="text-3xl font-extrabold tracking-tighter text-slate-900">InkWell</a>
                 
-                <div class="hidden md:flex space-x-6 text-sm font-semibold text-gray-500">
+                <div class="hidden md:flex space-x-8 text-[15px] font-bold text-slate-500">
                     <a href="/" class="hover:text-blue-600 transition">Home</a>
-                    <a href="#" class="hover:text-blue-600 transition">Write</a>
-                    <a href="#" class="hover:text-blue-600 transition">Explore</a>
-                </div>
-
-                <div class="relative hidden lg:block">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                    </span>
-                    <input type="text" class="bg-gray-100 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500 w-48 transition-all focus:w-64" placeholder="Search">
+                    
+                    <a href="{% url 'post_list' %}" class="hover:text-blue-600 transition">Library</a>
+                    <a href="{% url 'post_create' %}" class="hover:text-blue-600 transition">Write</a>
+                    <a href="{% url 'about_us' %}" class="hover:text-blue-600 transition">About us</a>
+                    {% comment %}<button class="flex items-center space-x-2 hover:text-blue-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <span>Search</span>
+                    </button> {% endcomment %}
                 </div>
             </div>
 
-            <div class="flex items-center space-x-5 text-sm font-semibold">
-                <a href="#" class="text-gray-600 hover:text-slate-900">Log In</a>
-                <a href="#" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition">Sign Up</a>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-sm font-medium text-slate-400">@{{ user.username }}</span>
+                    <form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit" class="text-sm font-bold text-slate-600 hover:text-red-500">Log Out</button></form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-6 py-2.5 rounded-full border border-slate-900 font-bold text-sm hover:bg-slate-900 hover:text-white transition">Log In</a>
+                    <a href="#" class="px-6 py-2.5 rounded-full bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-200 hover:bg-blue-600 transition">Sign Up</a>
+                {% endif %}
             </div>
         </div>
     </nav>
 
     <main>
+                {% if messages %}
+            <div id="toast" class="fixed top-28 left-1/2 -translate-x-1/2 z-100 w-full max-w-md px-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                {% for message in messages %}
+                    <div class="bg-slate-900 text-white px-6 py-4 rounded-3xl shadow-2xl flex items-center justify-between border border-white/10 backdrop-blur-md">
+                        <div class="flex items-center gap-3">
+                            <span class="text-blue-400">✨</span>
+                            <p class="text-sm font-bold">{{ message }}</p>
+                        </div>
+                        <button onclick="this.parentElement.parentElement.remove()" class="text-slate-500 hover:text-white transition">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+             <script>
+    // Wait 4 seconds, then fade out and remove the toast
+    setTimeout(() => {
+        const toast = document.getElementById('toast');
+        if (toast) {
+            toast.style.transition = "opacity 0.5s ease";
+            toast.style.opacity = "0";
+            setTimeout(() => toast.remove(), 500);
+        }
+    }, 4000); // 4000ms = 4 seconds
+</script>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        
+        <div class="mb-6">
+            <a href="/" class="text-2xl font-black tracking-tighter text-slate-900">InkWell</a>
+            <p class="text-slate-600 mt-2 font-medium">
+                A digital sanctuary for modern storytellers.
+            </p>
+        </div>
 
-    <footer class="mt-20 py-10 border-t border-gray-100 text-center text-gray-400 text-sm">
-        &copy; 2025 InkWell. All rights reserved.
-    </footer>
-
+        <div class="pt-8 border-t border-slate-100">
+            <p class="text-sm font-bold text-slate-900 uppercase tracking-widest">
+                © 2026 All rights reserved.
+            </p>
+        </div>
+        
+    </div>
+</footer>
 </body>
 </html>

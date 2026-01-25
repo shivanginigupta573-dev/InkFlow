@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    /* Fixed aspect ratio for images to prevent distortion seen in Spider-Man card */
+    .card-image {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    /* Smooth hover effect for cards */
+    .post-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .post-card:hover {
+        transform: translateY(-8px);
+    }
+</style>
+
+<section class="pt-32 pb-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+            <div class="space-y-4">
+                <h1 class="text-7xl font-black text-slate-900 tracking-tighter">
+                    Explore <span class="text-blue-500">Magic</span>
+                </h1>
+                <p class="text-xl text-slate-400 font-medium italic">Where words find their flow.</p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 bg-slate-50 p-2 rounded-[2rem] border border-slate-100 shadow-inner">
+                {% for cat in categories %}
+                    <a href="?category={{ cat }}" 
+                       class="px-8 py-3 rounded-full font-bold text-sm transition-all duration-300 
+                       {% if active_category == cat %} 
+                            bg-blue-500 text-white shadow-lg shadow-blue-200 
+                       {% else %} 
+                            text-slate-400 hover:text-slate-900 
+                       {% endif %}">
+                        {{ cat }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for post in posts %}
+                <div class="post-card group bg-white rounded-[2.5rem] border border-slate-200 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-100 flex flex-col min-h-[500px]">
+                    
+                    {% if post.photo %}
+                        <div class="overflow-hidden">
+                            <img src="{{ post.photo.url }}" class="card-image group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                    {% else %}
+                        <div class="h-2 bg-blue-500"></div>
+                    {% endif %}
+
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-blue-500 bg-blue-50 px-3 py-1 rounded-lg">
+                                {{ post.category }}
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                {{ post.created_at|date:"M d" }}
+                            </span>
+                        </div>
+
+                        <h2 class="text-2xl font-black text-slate-900 mb-4 leading-tight">
+                            {{ post.text|truncatechars:45 }}
+                        </h2>
+                        
+                        <p class="text-slate-500 leading-relaxed mb-8 flex-grow">
+                            {{ post.text|truncatechars:140 }}
+                        </p>
+
+                        <div class="pt-6 border-t border-slate-100 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-500 border border-slate-200">
+                                    {{ post.user.username|slice:":1"|upper }}
+                                </div>
+                                <span class="text-xs font-bold text-slate-900 hover:text-blue-500 transition-colors cursor-default">
+                                    @{{ post.user.username }}
+                                </span>
+                            </div>
+                            <a href="{% url 'post_detail' post.id %}" class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] group-hover:translate-x-1 transition-transform">
+                                Read Full &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full py-40 text-center bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-200">
+                    <p class="text-xl font-bold text-slate-400 italic">"The ink hasn't flowed for {{ active_category }} yet..."</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center bg-[#FDFCFB] px-6">
+    <div class="max-w-md w-full bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-red-50 border border-red-50 text-center">
+        <div class="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center text-3xl mb-6 mx-auto">
+            🔥
+        </div>
+        
+        <h1 class="text-3xl font-extrabold text-slate-900 mb-4">Melt this Story?</h1>
+        <p class="text-gray-400 mb-8 leading-relaxed">
+            You are about to delete <span class="font-bold text-slate-700">"{{ post.text|truncatechars:20 }}"</span>. This action cannot be undone.
+        </p>
+
+        <form method="POST" class="space-y-3">
+            {% csrf_token %}
+            <button type="submit" class="w-full py-4 bg-red-500 text-white rounded-2xl font-bold shadow-lg shadow-red-200 hover:bg-red-600 transition-all hover:scale-[1.02]">
+                Yes, Delete Forever
+            </button>
+            <a href="{% url 'post_list' %}" class="block w-full py-4 bg-gray-50 text-gray-500 rounded-2xl font-bold hover:bg-gray-100 transition-all">
+                Nevermind, Keep it
+            </a>
+        </form>
+    </div>
+</section>
+{% endblock %}
