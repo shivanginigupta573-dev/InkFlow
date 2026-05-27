@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center bg-[#FDFCFB] pt-20 px-6">
+    <div class="max-w-md w-full bg-white/40 backdrop-blur-2xl border border-white/40 p-12 rounded-[3rem] shadow-2xl shadow-blue-100">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black text-slate-900 mb-2">Create Account</h1>
+            <p class="text-gray-400 font-medium">Start writing in your own flow.</p>
+        </div>
+
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="bg-red-50 text-red-600 px-4 py-3 rounded-2xl text-sm font-bold">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2" for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2" for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2" for="{{ form.password1.id_for_label }}">Password</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 ml-2" for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" class="w-full bg-[#A5D8FF] text-[#1E3A8A] py-4 rounded-2xl font-bold shadow-lg shadow-blue-100 hover:scale-[1.02] transition-all mt-4">
+                Create Account
+            </button>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-gray-400">
+            Already have an account? <a href="{% url 'login' %}" class="text-[#74C0FC] font-bold">Log in</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
