@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="hero-gradient min-h-[85vh] flex items-center relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        
+        <div class="space-y-8 animate-in fade-in slide-in-from-left duration-1000">
+            <div class="inline-block border-2 border-slate-900 px-4 py-1.5 rounded-sm">
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-800">The space for modern ink</span>
+            </div>
+
+            <h1 class="text-6xl md:text-7xl font-black text-slate-900 leading-tight">
+                WELCOME TO <span class="text-blue-500">INKFLOW</span>
+            </h1>
+
+            <p class="text-xl text-slate-500 max-w-md leading-relaxed font-medium">
+                Write and share your articles, essays, poems and stories - all in one beautiful space.
+            </p>
+
+            <div class="pt-4">
+                <a href="{% url 'post_create' %}" class="inline-block bg-blue-500 text-white px-10 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-200 hover:bg-blue-600 hover:-translate-y-1 transition-all">
+                    Start Writing
+                </a>
+            </div>
+        </div>
+
+        <div class="flex justify-center relative">
+            <div class="absolute inset-0 bg-blue-50 rounded-full blur-3xl opacity-50 scale-125"></div>
+            
+            <div class="aspect-square w-full max-w-md bg-blue-50 rounded-[3rem] flex items-center justify-center p-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/>
+            </svg>
+        </div> 
+                
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 w-full overflow-hidden leading-0">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-24 fill-white">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+        </svg>
+    </div>
+</section>
+{% endblock %}
